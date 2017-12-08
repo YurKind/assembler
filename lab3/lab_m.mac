@@ -1,0 +1,67 @@
+;копирование строки, символа и буффера в регистры esi, ah, edi соответсвтенно
+copy_sources macro inpt_string, user_symbol
+    mov esi, offset inpt_string
+    mov ah, [user_symbol]
+endm
+
+;ищет символ из ah, в строке из edi 
+find_symbol macro
+    search:
+        mov al, [esi]
+        inc esi
+        cmp al, 0
+        je not_found
+        cmp al, ah
+        je found 
+        jmp search
+    
+    not_found:
+        invoke StdOut, addr msg3    ; выводим сообщение о том, что введённый символ не найден
+        exit buf
+    
+    found:        
+endm
+
+copy_parts_of_string macro buffer, user_string
+    mov ebp, offset user_string 
+    mov edi, offset buffer
+    beginning_of_string_copy:
+        mov al, [ebp]
+        inc ebp
+        cmp al, ah
+        je end_of_string_copy
+        mov [edi], al
+        inc edi
+        jmp beginning_of_string_copy
+        
+    end_of_string_copy:
+        mov al, [ebp]
+        inc ebp
+        cmp al, 0
+        je done
+        mov [edi], al
+        inc edi
+        jmp end_of_string_copy
+        
+    done:
+endm
+
+string_overwritting macro buffer
+    mov edi, offset buffer
+        shaping:
+            mov al, [edi]
+            cmp al, 0
+            je success
+            mov [esi], al
+            inc edi
+            inc esi
+            jmp shaping
+    success:
+        invoke StdOut, addr string
+        exit buf
+endm
+
+exit macro buffer
+    invoke StdIn, addr buffer, 3
+    invoke ExitProcess, 0
+endm
