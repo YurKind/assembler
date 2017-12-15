@@ -4,7 +4,7 @@ copy_sources macro inpt_string, user_symbol
     mov ah, [user_symbol]
 endm
 
-;ищет символ из ah, в строке из edi 
+;ищет символ из ah, в строке из esi 
 find_symbol macro
     search:
         mov al, [esi]
