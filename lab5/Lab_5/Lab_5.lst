@@ -1,0 +1,90 @@
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/17/17 13:50:37
+lab.asm							     Page 1 - 1
+
+
+				.686
+				.MODEL FLAT, C
+				.STACK
+ 00000000			.DATA
+ 00000000 45 6E 74 65 72	str_message db 'Enter the string', 13, 10, 0
+	   20 74 68 65 20
+	   73 74 72 69 6E
+	   67 0D 0A 00
+ 00000013 45 6E 74 65 72	sub_message db 'Enter the substring', 13, 10, 0
+	   20 74 68 65 20
+	   73 75 62 73 74
+	   72 69 6E 67 0D
+	   0A 00
+
+				EXTRN printf: proc
+				EXTRN setString: proc
+				EXTRN setSubstring: proc
+				EXTRN bmSearch: proc
+
+ 00000000			.CODE
+
+
+ 00000000			search PROC
+					;ввод строки
+ 00000000  E8 00000000 E		call setString
+ 00000005  8B F0			mov esi, eax
+					;ввод подстроки
+ 00000007  E8 00000000 E		call setSubstring
+ 0000000C  8B F8			mov edi, eax
+
+					;вызов поиска подстроки в строке
+ 0000000E  57				push edi
+ 0000000F  56				push esi
+ 00000010  E8 00000000 E		call bmSearch
+ 00000015  5E				pop esi
+ 00000016  5F				pop edi
+
+ 00000017  C3				retn
+
+ 00000018			search endp
+				end
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/17/17 13:50:37
+lab.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00000400 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000029 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000018 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+search . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000018 Public C
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000001h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+bmSearch . . . . . . . . . . . .	L Near	 00000000 FLAT	External C
+printf . . . . . . . . . . . . .	L Near	 00000000 FLAT	External C
+setString  . . . . . . . . . . .	L Near	 00000000 FLAT	External C
+setSubstring . . . . . . . . . .	L Near	 00000000 FLAT	External C
+str_message  . . . . . . . . . .	Byte	 00000000 _DATA	
+sub_message  . . . . . . . . . .	Byte	 00000013 _DATA	
+
+	   0 Warnings
+	   0 Errors
